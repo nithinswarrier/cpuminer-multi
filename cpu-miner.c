@@ -1818,22 +1818,12 @@ static void signal_handler(int sig) {
 }
 #endif
 
-#ifndef __arm__
-static inline int cpuid(int code, uint32_t where[4]) {
-	asm volatile("cpuid":"=a"(*where),"=b"(*(where+1)),
-			"=c"(*(where+2)),"=d"(*(where+3)):"a"(code));
-	return (int)where[0];
-}
-#endif
-
 static bool has_aes_ni()
 {
 	#ifdef __arm__
 	return false;
 	#else
-	uint32_t cpu_info[4];
-	cpuid(1, cpu_info);
-	return cpu_info[2] & (1 << 25);
+	return false;
 	#endif
 }
 
